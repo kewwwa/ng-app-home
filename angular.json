@@ -1,0 +1,134 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "src/client/projects",
+  "cli": {
+    "packageManager": "yarn"
+  },
+  "projects": {
+    "ng-app-home": {
+      "root": "src/client/app",
+      "sourceRoot": "src/client/app/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/client",
+            "index": "src/client/app/src/index.html",
+            "main": "src/client/app/src/main.ts",
+            "polyfills": "src/client/app/src/polyfills.ts",
+            "tsConfig": "src/client/app/src/tsconfig.app.json",
+            "assets": [
+              "src/client/app/src/favicon.ico",
+              "src/client/app/src/assets"
+            ],
+            "styles": [
+              "src/client/app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/client/app/src/environments/environment.ts",
+                  "with": "src/client/app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ng-app-home:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ng-app-home:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ng-app-home:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/client/app/src/test.ts",
+            "polyfills": "src/client/app/src/polyfills.ts",
+            "tsConfig": "src/client/app/src/tsconfig.spec.json",
+            "karmaConfig": "src/client/app/src/karma.conf.js",
+            "styles": [
+              "src/client/app/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "src/client/app/src/favicon.ico",
+              "src/client/app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/client/app/src/tsconfig.app.json",
+              "src/client/app/src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-app-home-e2e": {
+      "root": "src/client/app/e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "src/client/app/e2e/protractor.conf.js",
+            "devServerTarget": "ng-app-home:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-app-home:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "src/client/app/e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ng-app-home"
+}
